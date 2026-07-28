@@ -100,6 +100,12 @@ ln -s ~/code/oh-my-hermes-memory/skills/memory-architect/references ~/.hermes/sk
 
 完整步骤与验证见 [`INSTALL.md`](INSTALL.md)。
 
+### 一键搭建 via `PROMPT.md`
+
+如果你想在一个全新 Hermes Agent 会话里一次性把整个 dual-store 架构搭起来，把 [`PROMPT.md`](PROMPT.md) 的内容粘贴到聊天里即可。agent 会按 8 个阶段走完（验证前置条件、应用 system-tier blocks、应用 reference-tier blocks、写 L1 索引、捕获 atomic-fact records、引导添加凭据、跑诊断、汇报）。每个 `omh memory capture` 仍需要你显式 `omh memory approve`。
+
+PROMPT 是幂等的 —— 在已部署的机器上重跑会跳过已存在的 blocks。
+
 ### 使用 skill
 
 在 Hermes 聊天会话中，当请求涉及 memory / dual-store / 凭据路由 / 架构决策时，agent 自动加载 `memory-architect`。触发示例：

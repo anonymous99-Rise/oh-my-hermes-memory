@@ -112,6 +112,12 @@ ln -s ~/code/oh-my-hermes-memory/skills/memory-architect/references ~/.hermes/sk
 
 Full details and verification steps in [`INSTALL.md`](INSTALL.md).
 
+### One-shot setup via `PROMPT.md`
+
+If you have a fresh Hermes Agent that you want to bring up to the full dual-store architecture in one go, paste the contents of [`PROMPT.md`](PROMPT.md) into a chat session. The agent walks through all 8 setup phases (verify prerequisites, apply system-tier blocks, apply reference-tier blocks, write L1 indices, capture atomic-fact records, prompt for credentials, run the diagnostic, report). Each `omh memory capture` still requires your explicit `omh memory approve`.
+
+The prompt is idempotent — re-running on a populated machine skips blocks that already exist.
+
 ### Use the skill
 
 In a Hermes chat session, the agent loads `memory-architect` automatically when the request mentions memory, dual-store, credential routing, or architecture decisions. Example triggers:
