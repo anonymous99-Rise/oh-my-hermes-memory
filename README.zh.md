@@ -72,7 +72,45 @@ Hermes Agent 内置的 `memory` 工具会在每个会话的 system prompt 中注
 
 ## 快速开始
 
-### 1. 克隆（OMH 作为子模块）
+### 把 skill 装进 Hermes Agent
+
+从三种安装方式中任选其一，结果都一样：`memory-architect` skill 在你下次开启 Hermes 会话时即可用。
+
+**方式 1 — 一行命令（推荐）：**
+
+```bash
+hermes skills install https://raw.githubusercontent.com/anonymous99-Rise/oh-my-hermes-memory/main/skills/memory-architect/SKILL.md --yes
+```
+
+**方式 2 — 通过 GitHub tap：**
+
+```bash
+hermes skills tap add anonymous99-Rise/oh-my-hermes-memory
+hermes skills install anonymous99-Rise/oh-my-hermes-memory/skills/memory-architect --yes
+```
+
+**方式 3 — clone 后软链接：**
+
+```bash
+git clone https://github.com/anonymous99-Rise/oh-my-hermes-memory.git ~/code/oh-my-hermes-memory
+mkdir -p ~/.hermes/skills/memory-architect
+ln -s ~/code/oh-my-hermes-memory/skills/memory-architect/SKILL.md ~/.hermes/skills/memory-architect/SKILL.md
+ln -s ~/code/oh-my-hermes-memory/skills/memory-architect/references ~/.hermes/skills/memory-architect/references
+```
+
+完整步骤与验证见 [`INSTALL.md`](INSTALL.md)。
+
+### 使用 skill
+
+在 Hermes 聊天会话中，当请求涉及 memory / dual-store / 凭据路由 / 架构决策时，agent 自动加载 `memory-architect`。触发示例：
+
+- "记住我偏好中文回复" → agent 加载以决定这条 fact 写到哪里
+- "WSL Kali 凭据应该存哪里？" → agent 加载查阅凭据路由规则
+- "审计一下当前的记忆架构" → agent 加载并跑 `python scripts/dual-store-status.py`
+
+skill 只是 agent 工具箱里的一件工具，按需加载，不自动运行。
+
+### 克隆完整项目（用于 docs / scripts / templates / examples）
 
 ```bash
 git clone --recurse-submodules https://github.com/anonymous99-Rise/oh-my-hermes-memory.git
@@ -80,15 +118,9 @@ cd oh-my-hermes-memory
 git submodule update --init   # 拉取 rlaope/oh-my-hermes 到 ./submodule-omh/
 ```
 
-### 2. 读架构概览
+克隆后你会拿到 `docs/`、`scripts/`、`templates/`、`examples/` 和 OMH 子模块。装 skill 已足够上手；克隆完整项目用于深入研究和定制。
 
-从 [`docs/01-architecture-overview.md`](docs/01-architecture-overview.md) 开始。它用真实示例走完每一个存储层。
-
-### 3. 用 `memory-architect` skill
-
-[`skills/memory-architect/SKILL.md`](skills/memory-architect/SKILL.md) 是 agent 侧的入口。当一个 Hermes + OMH agent 准备写记忆条目时，加载这个 skill 决定往哪写。
-
-### 4. 应用模板
+### 应用模板
 
 `templates/` 目录有现成可粘贴的 blocks 和索引条目：
 
@@ -97,15 +129,15 @@ git submodule update --init   # 拉取 rlaope/oh-my-hermes 到 ./submodule-omh/
 - `templates/index-entry-memory.md` —— 400 字符 L1 MEMORY.md 索引条目
 - `templates/index-entry-user.md` —— 150 字符 L1 USER.md 索引条目
 
-### 5. 跑诊断脚本
+### 跑诊断脚本
 
 ```bash
 python scripts/dual-store-status.py
 ```
 
-打印 L1（`~/.hermes/memories/MEMORY.md` 和 `USER.md`）、L0 OMH 项目记忆（blocks + approved records）和 `.env` 凭据引用的当前状态。报告架构是否完整。
+打印 L1、L0 和 `.env` 引用的当前状态，报告架构是否完整。
 
-### 6. 用路由脚本判断新 fact 该去哪
+### 用路由脚本判断新 fact 该去哪
 
 ```bash
 python scripts/route-fact.py --text "用户偏好简洁回复" --frequency every
@@ -113,7 +145,7 @@ python scripts/route-fact.py --text "构建命令需要设 FOO=1" --frequency oc
 python scripts/route-fact.py --text "GitHub PAT" --sensitive
 ```
 
-脚本建议新 fact 应该落在哪一层，并打印准确的 capture/write 命令。脚本**不执行**写入 —— 运维仍需审批。
+脚本建议新 fact 落在哪一层，并打印准确的 capture/write 命令。脚本**不执行**写入 —— 运维仍需审批。
 
 ## 仓库结构
 

@@ -84,7 +84,45 @@ exactly one tier using this rule. Full version in
 
 ## Quick Start
 
-### 1. Clone with OMH as a submodule
+### Install the skill into your Hermes Agent
+
+Pick one of three install paths. All three produce the same result: the `memory-architect` skill becomes available in your next Hermes session.
+
+**Path 1 — one-liner (recommended):**
+
+```bash
+hermes skills install https://raw.githubusercontent.com/anonymous99-Rise/oh-my-hermes-memory/main/skills/memory-architect/SKILL.md --yes
+```
+
+**Path 2 — via GitHub tap:**
+
+```bash
+hermes skills tap add anonymous99-Rise/oh-my-hermes-memory
+hermes skills install anonymous99-Rise/oh-my-hermes-memory/skills/memory-architect --yes
+```
+
+**Path 3 — clone and link:**
+
+```bash
+git clone https://github.com/anonymous99-Rise/oh-my-hermes-memory.git ~/code/oh-my-hermes-memory
+mkdir -p ~/.hermes/skills/memory-architect
+ln -s ~/code/oh-my-hermes-memory/skills/memory-architect/SKILL.md ~/.hermes/skills/memory-architect/SKILL.md
+ln -s ~/code/oh-my-hermes-memory/skills/memory-architect/references ~/.hermes/skills/memory-architect/references
+```
+
+Full details and verification steps in [`INSTALL.md`](INSTALL.md).
+
+### Use the skill
+
+In a Hermes chat session, the agent loads `memory-architect` automatically when the request mentions memory, dual-store, credential routing, or architecture decisions. Example triggers:
+
+- "Remember that I prefer Chinese responses." → agent loads to decide where to write the fact.
+- "Where should I store the WSL Kali credential?" → agent loads to consult the credential routing rules.
+- "Audit my current memory architecture." → agent loads to run `python scripts/dual-store-status.py`.
+
+The skill is just one tool in the agent's toolbox. It loads on demand when the task matches its trigger; it does not auto-run.
+
+### Clone the full project (for the docs, scripts, templates, and examples)
 
 ```bash
 git clone --recurse-submodules https://github.com/anonymous99-Rise/oh-my-hermes-memory.git
@@ -92,40 +130,26 @@ cd oh-my-hermes-memory
 git submodule update --init   # pulls rlaope/oh-my-hermes into ./submodule-omh/
 ```
 
-### 2. Read the architecture overview
+The clone gives you `docs/`, `scripts/`, `templates/`, `examples/`, and the OMH submodule. The skill install alone is enough to start using the architecture; the cloned project is for deep dives and customization.
 
-Start with [`docs/01-architecture-overview.md`](docs/01-architecture-overview.md).
-It walks through every storage layer with real examples.
-
-### 3. Use the `memory-architect` skill
-
-The skill at [`skills/memory-architect/SKILL.md`](skills/memory-architect/SKILL.md)
-is the agent-side entry point. When a Hermes + OMH agent is about to write a
-memory entry, it loads this skill to decide where to put it.
-
-### 4. Apply templates
+### Apply templates
 
 The `templates/` directory contains ready-to-paste blocks and index entries:
 
-- `templates/env-baseline-system-block.md` — the canonical L0 system block for
-  environment baseline (host, paths, CLI executors, OMH install state).
-- `templates/user-workflow-system-block.md` — the canonical L0 system block for
-  user workflow preferences (language, executor routing, shell routing).
-- `templates/index-entry-memory.md` — a 400-char L1 MEMORY.md index entry that
-  points to the L0 blocks above.
+- `templates/env-baseline-system-block.md` — the canonical L0 system block for environment baseline.
+- `templates/user-workflow-system-block.md` — the canonical L0 system block for user workflow preferences.
+- `templates/index-entry-memory.md` — a 400-char L1 MEMORY.md index entry.
 - `templates/index-entry-user.md` — a 150-char L1 USER.md index entry.
 
-### 5. Run the diagnostic script
+### Run the diagnostic script
 
 ```bash
 python scripts/dual-store-status.py
 ```
 
-Prints the current state of L1 (`~/.hermes/memories/MEMORY.md` and `USER.md`),
-L0 OMH project memory (blocks + approved records), and `.env` credential
-references. Reports whether the architecture is intact.
+Prints the current state of L1, L0, and `.env` references. Reports whether the architecture is intact.
 
-### 6. Route new facts with the helper script
+### Route new facts with the helper script
 
 ```bash
 python scripts/route-fact.py --text "User prefers concise responses" --frequency every
@@ -133,8 +157,7 @@ python scripts/route-fact.py --text "Build command requires setting FOO=1" --fre
 python scripts/route-fact.py --text "GitHub PAT" --sensitive
 ```
 
-The script suggests which tier a new fact should land in and prints the
-exact command to capture / write it.
+The script suggests which tier a new fact should land in and prints the exact command to capture / write it.
 
 ## Repository Layout
 
