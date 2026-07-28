@@ -1,0 +1,3 @@
+[submodule "submodule-omh"]
+	path = submodule-omh
+	url = https://github.com/rlaope/oh-my-hermes.git

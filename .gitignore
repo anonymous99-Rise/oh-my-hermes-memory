@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.venv/
+venv/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# OMH local memory files (security)
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+build/
+dist/
+*.egg
+
+# Logs
+*.log
+logs/
+
+# Temporary
+tmp/
+temp/
+.cache/
+
+# Secrets (NEVER commit)
+secrets/
+credentials/
+*.pem
+*.key
