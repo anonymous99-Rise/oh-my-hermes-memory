@@ -1,18 +1,34 @@
 # INSTALL
 
-Three ways to install the `memory-architect` skill into your Hermes Agent. Pick the one that matches your setup.
+Four ways to install the `memory-architect` skill into your agent. Pick the one that matches your setup.
 
-## Path 1 — One-liner install via `hermes skills install` (recommended)
+## Path 0 — `npx skills` (recommended, cross-agent)
 
-The fastest path. Hermes fetches the SKILL.md directly from the public GitHub raw URL and installs it into your local skills directory.
+The fastest path. Works with Hermes Agent, Claude Code, Codex, Cursor, OpenCode, and 70+ other agents that the `npx skills` CLI supports.
+
+```bash
+npx skills add anonymous99-Rise/oh-my-hermes-memory -g -y
+```
+
+The `-g` flag installs to the user directory (not the current project). The `-y` flag skips confirmation prompts.
+
+To target specific agents:
+
+```bash
+npx skills add anonymous99-Rise/oh-my-hermes-memory -a hermes-agent -a claude-code -a codex -g -y
+```
+
+Once installed, the skill is available in the next session of the targeted agents. The CLI prints the install path (typically `~/.hermes/skills/memory-architect/` on Hermes).
+
+## Path 1 — `hermes skills install` (Hermes-only one-liner)
+
+If you only need Hermes Agent and prefer the native command:
 
 ```bash
 hermes skills install https://raw.githubusercontent.com/anonymous99-Rise/oh-my-hermes-memory/main/skills/memory-architect/SKILL.md --yes
 ```
 
 This installs the SKILL.md and any references under it. After the command succeeds, restart your Hermes session so the skill loader picks up the new skill.
-
-If your Hermes session is already running, the new skill becomes visible after a fresh session start. The CLI itself does not need a restart.
 
 ## Path 2 — Install from a GitHub tap
 

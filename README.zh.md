@@ -72,24 +72,32 @@ Hermes Agent 内置的 `memory` 工具会在每个会话的 system prompt 中注
 
 ## 快速开始
 
-### 把 skill 装进 Hermes Agent
+### 把 skill 装进 agent
 
-从三种安装方式中任选其一，结果都一样：`memory-architect` skill 在你下次开启 Hermes 会话时即可用。
+skill 跨 agent 兼容。从与你 agent 匹配的安装方式中任选其一。
 
-**方式 1 — 一行命令（推荐）：**
+**方式 0 — `npx skills`（推荐，兼容 70+ agent）：**
+
+```bash
+npx skills add anonymous99-Rise/oh-my-hermes-memory -g -y
+```
+
+支持 Hermes Agent、Claude Code、Codex、Cursor、OpenCode 等 [70+ agent](https://github.com/vercel-labs/skills#supported-agents)。`-g` 装到用户目录（非当前项目）；`-y` 跳过确认。被索引后在 https://skills.sh/anonymous99-Rise/oh-my-hermes-memory 可查。
+
+**方式 1 — `hermes skills install`（仅 Hermes）：**
 
 ```bash
 hermes skills install https://raw.githubusercontent.com/anonymous99-Rise/oh-my-hermes-memory/main/skills/memory-architect/SKILL.md --yes
 ```
 
-**方式 2 — 通过 GitHub tap：**
+**方式 2 — 通过 GitHub tap（仅 Hermes）：**
 
 ```bash
 hermes skills tap add anonymous99-Rise/oh-my-hermes-memory
 hermes skills install anonymous99-Rise/oh-my-hermes-memory/skills/memory-architect --yes
 ```
 
-**方式 3 — clone 后软链接：**
+**方式 3 — clone 后软链接（任何 agent）：**
 
 ```bash
 git clone https://github.com/anonymous99-Rise/oh-my-hermes-memory.git ~/code/oh-my-hermes-memory

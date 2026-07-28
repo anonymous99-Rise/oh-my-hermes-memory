@@ -84,24 +84,32 @@ exactly one tier using this rule. Full version in
 
 ## Quick Start
 
-### Install the skill into your Hermes Agent
+### Install the skill into your agent
 
-Pick one of three install paths. All three produce the same result: the `memory-architect` skill becomes available in your next Hermes session.
+The skill is cross-agent compatible. Pick the install path that matches your agent.
 
-**Path 1 — one-liner (recommended):**
+**Path 0 — `npx skills` (recommended, works with 70+ agents):**
+
+```bash
+npx skills add anonymous99-Rise/oh-my-hermes-memory -g -y
+```
+
+Supports Hermes Agent, Claude Code, Codex, Cursor, OpenCode, and [70 more](https://github.com/vercel-labs/skills#supported-agents). The `-g` flag installs to your user directory (not the current project); `-y` skips prompts. Available skills are listed at https://skills.sh/anonymous99-Rise/oh-my-hermes-memory once indexed.
+
+**Path 1 — `hermes skills install` (Hermes-only):**
 
 ```bash
 hermes skills install https://raw.githubusercontent.com/anonymous99-Rise/oh-my-hermes-memory/main/skills/memory-architect/SKILL.md --yes
 ```
 
-**Path 2 — via GitHub tap:**
+**Path 2 — via GitHub tap (Hermes-only):**
 
 ```bash
 hermes skills tap add anonymous99-Rise/oh-my-hermes-memory
 hermes skills install anonymous99-Rise/oh-my-hermes-memory/skills/memory-architect --yes
 ```
 
-**Path 3 — clone and link:**
+**Path 3 — clone and link (any agent):**
 
 ```bash
 git clone https://github.com/anonymous99-Rise/oh-my-hermes-memory.git ~/code/oh-my-hermes-memory
